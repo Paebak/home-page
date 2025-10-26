@@ -23,11 +23,23 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build
-      # SPA fallback so client-side routes don’t 404 on refresh
-      - run: cp -f dist/index.html dist/404.html
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      - name: Build
+        env: { CI: false }
+        run: npm run build
+
+      - name: SPA 404 fallback
+        run: cp -f dist/index.html dist/404.html
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
