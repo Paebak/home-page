@@ -26,7 +26,12 @@ jobs:
 
       - name: Install deps
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+          if [ -f package-lock.json ]; then
+              npm ci
+            else
+              npm install
+            fi
+
 
       - name: Build
         env: { CI: false }
