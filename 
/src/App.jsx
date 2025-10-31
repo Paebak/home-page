@@ -3,7 +3,6 @@ import Home from "./pages/Home.jsx";
 import Contact from "./pages/Contact.jsx";
 import CyberSecurity from "./pages/CyberSecurity.jsx";
 
-
 export default function App() {
 	return (
 		<div className="container">
