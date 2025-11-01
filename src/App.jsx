@@ -11,9 +11,7 @@ export default function App() {
           {/* HERO tile (2x2) */}
           <div className="tile tile--hero tile--cta">
             <h1 className="hero-title mb-2">
-              Cybersecurity engineer turning telemetry into{" "}
-              <span className="text-primary underline-thick">proactive defense</span>.
-            </h1>
+              Cybersecurity engineer turning telemetry into proactive defense </h1>  
             <p className="hero-blurb mb-3">
               I build <strong>people-first</strong> ingestion pipelines & automations in TDLM—making
               internal & external risks visible early and actionable for stakeholders.
