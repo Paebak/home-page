@@ -1,11 +1,7 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// Deployed on root at neofound.org, so base = "/"
+// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react()],
-	root: "src",
-	build: {
-		outDir: "../dist",
-	},
-});
+  plugins: [react()],
+})

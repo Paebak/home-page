@@ -1,8 +1,0 @@
-:root { font-family: ui-sans-serif, system-ui; color-scheme: light dark; }
-body { margin: 0; }
-.container { max-width: 960px; margin: 0 auto; padding: 2rem; }
-header { display: flex; align-items: center; gap: 1rem; }
-nav a { margin-right: 1rem; text-decoration: none; }
-nav a.active { font-weight: 700; text-decoration: underline; }
-main { margin-top: 1rem; }
-footer { margin-top: 3rem; color: #888; }
