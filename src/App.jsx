@@ -30,7 +30,6 @@ export default function App() {
 
           <div className="tile tile--right tile--cta">
             <div className="d-flex flex-column align-items-center text-center">
-              <div className="mb-2 fw-semibold">Appearance</div>
               <ThemeToggle />
             </div>
           </div>

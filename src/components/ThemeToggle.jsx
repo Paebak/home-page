@@ -1,7 +1,6 @@
-
 import React from "react";
-import { Button } from "react-bootstrap";
-import useColorMode from "../hooks/useColorMode";
+import { Around } from "@theme-toggles/react";
+import "@theme-toggles/react/css/Around.css";
 
 export default function ThemeToggle() {
   const [mode, setMode] = React.useState(
@@ -13,13 +12,16 @@ export default function ThemeToggle() {
     localStorage.setItem("theme", mode);
   }, [mode]);
 
+  const handleToggle = () => setMode(m => (m === "dark" ? "light" : "dark"));
+
   return (
-    <Button
-      variant={mode === "dark" ? "outline-light" : "outline-dark"}
-      size="sm"
-      onClick={() => setMode(mode === "dark" ? "light" : "dark")}
-    >
-      {mode === "dark" ? "Light mode" : "Dark mode"}
-    </Button>
+    <Around
+      className="theme-toggle"
+      duration={750}
+      toggled={mode === "dark"}   // true = dark icon state
+      onToggle={handleToggle}
+      aria-label="Toggle theme"
+      title="Toggle theme"
+    />
   );
 }
