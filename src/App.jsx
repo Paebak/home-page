@@ -1,7 +1,8 @@
+import React from "react";
 import { Button } from "react-bootstrap";
 import ThemeToggle from "./components/ThemeToggle.jsx";
+import SnakeCard from "./components/SnakeCard.jsx";
 import memoji from "./assets/memoji.png";
-
 
 export default function App() {
   return (
@@ -12,32 +13,31 @@ export default function App() {
 
             {/* LEFT: hero spans 2/3 on md+ */}
             <div className="col-12 col-md-8">
-  <div className="tile tile--hero tile--cta h-100 d-flex flex-column flex-md-row align-items-center justify-content-between text-md-start text-center">
-    <div className="flex-grow-1 pe-md-4">
-      <h1 className="hero-title mb-2">
-        Hi! I'm <span style={{ color: "#22c55e" }}>Matt</span> - I'm a Cybersecurity Engineer!
-      </h1>
-      <p className="hero-blurb mb-3">
-        I build <strong>people-first</strong> ingestion pipelines & automations in TDLM—
-        making internal & external risks visible early and actionable for stakeholders.
-      </p>
-      <div className="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
-        <Button href="#about" size="sm">About</Button>
-        <Button variant="outline-primary" href="https://github.com/Paebak" size="sm">GitHub</Button>
-        <Button variant="outline-secondary" href="/matt-downs-resume.pdf" size="sm">Resume</Button>
-      </div>
-    </div>
+              <div className="tile tile--hero tile--cta h-100 d-flex flex-column flex-md-row align-items-center justify-content-between text-md-start text-center">
+                <div className="flex-grow-1 pe-md-4">
+                  <h1 className="hero-title mb-2">
+                    Hi! I'm <span style={{ color: "#22c55e" }}>Matt</span> - I'm a Cybersecurity Engineer!
+                  </h1>
+                  <p className="hero-blurb mb-3">
+                    I build <strong>people-first</strong> ingestion pipelines & automations in TDLM—
+                    making internal & external risks visible early and actionable for stakeholders.
+                  </p>
+                  <div className="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
+                    <Button href="#about" size="sm">About</Button>
+                    <Button variant="outline-primary" href="https://github.com/Paebak" size="sm">GitHub</Button>
+                    <Button variant="outline-secondary" href="/matt-downs-resume.pdf" size="sm">Resume</Button>
+                  </div>
+                </div>
 
-    <div className="mt-4 mt-md-0 text-center">
-      <img
-        src={memoji}
-        alt="Matt Memoji"
-        className="hero-img"
-      />
-    </div>
-  </div>
-</div>
-
+                <div className="mt-4 mt-md-0 text-center">
+                  <img
+                    src={memoji}
+                    alt="Matt Memoji"
+                    className="hero-img"
+                  />
+                </div>
+              </div>
+            </div>
 
             {/* RIGHT: two stacked tiles */}
             <div className="col-12 col-md-4 d-flex flex-column gap-3">
@@ -104,14 +104,11 @@ export default function App() {
               </div>
             </div>
 
+            {/* SNAKE GAME TILE */}
             <div className="col-12 col-md-6">
-              <div id="contact" className="tile tile--cta h-100">
-                <h5 className="mb-1">Contact 📝</h5>
-                <div className="text-secondary small mb-2">Email / GitHub — let’s collaborate.</div>
-                <div className="d-flex gap-2">
-                  <Button href="mailto:matt@neofound.org" size="sm">Email</Button>
-                  <Button href="https://github.com/Paebak" variant="outline-secondary" size="sm">GitHub</Button>
-                </div>
+              {/* SnakeCard renders its own Bootstrap Card; we wrap it in your tile container for consistent spacing */}
+              <div className="tile tile--cta h-100 p-0">
+                <SnakeCard />
               </div>
             </div>
 
@@ -119,7 +116,7 @@ export default function App() {
         </div>
       </section>
       <footer className="text-center py-3 text-secondary small">
-          © {new Date().getFullYear()} Matt Downs. All rights reserved.
+        © {new Date().getFullYear()} Matt Downs. All rights reserved.
       </footer>
     </>
   );
