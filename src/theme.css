@@ -5,11 +5,11 @@
 /* LIGHT (default) */
 :root {
   /* Neutral greys */
-  --nf-gray-0: #ffffff;
-  --nf-gray-1: #f5f6f8;
-  --nf-gray-2: #e7eaef;
-  --nf-gray-3: #d3d8e1;
-  --nf-gray-7: #1b1f23;
+  --nf-gray-0: #b0adad;
+  --nf-gray-1: #b0adad;
+  --nf-gray-2: #b0adad;
+  --nf-gray-3: #b0adad;
+  --nf-gray-7: #b0adad;
 
   /* Accent greens */
   --nf-green: #22c55e;
@@ -265,3 +265,11 @@ body { margin: 0; }
 .hero-title { font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.1; }
 .hero-blurb { font-size: clamp(1rem, 1.4vw, 1.125rem); }
 
+/* Smooth transition between light/dark modes */
+html, body, .tile, .card, .navbar, .btn, .theme-toggle, .hero-title, .hero-blurb {
+  transition:
+    background-color 1s ease,
+    color 1s ease,
+    border-color 1s ease,
+    box-shadow 1s ease;
+}

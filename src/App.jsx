@@ -94,15 +94,31 @@ export default function App() {
               </a>
             </div>
 
-            <div className="col-12 col-md-6">
-              <div id="experience" className="tile tile--cta h-100">
-                <h5 className="mb-1">Experience 🧰</h5>
-                <div className="text-secondary small mb-2">
-                  TDLM engineering, XSOAR runbooks, CMDB context.
-                </div>
-                <Button href="#experience-full" size="sm">See roles</Button>
-              </div>
-            </div>
+           <div className="col-12 col-md-6 d-flex flex-column gap-3">
+  {/* Top half: Experience */}
+  <div id="experience" className="tile tile--cta flex-fill d-flex flex-column">
+    <h5 className="mb-1">Experience 🧰</h5>
+    <div className="text-secondary small mb-2">
+      TDLM engineering, XSOAR runbooks, CMDB context.
+    </div>
+    <div className="mt-auto">
+      <Button href="#experience-full" size="sm">See roles</Button>
+    </div>
+  </div>
+
+  {/* Bottom half: Photography Projects */}
+  <div id="photo-projects" className="tile tile--cta flex-fill d-flex flex-column">
+    <h5 className="mb-1">Photography Projects 📷</h5>
+    <div className="text-secondary small mb-2">
+      Darkroom workflows, film tests, and dev charts.
+    </div>
+    <div className="d-flex flex-wrap gap-2 small">
+      <Button href="#photo-app" size="sm" variant="outline-primary">R2 App</Button>
+      <Button href="#dev-notes" size="sm" variant="outline-secondary">Dev Notes</Button>
+      <Button href="#gallery" size="sm">Gallery</Button>
+    </div>
+  </div>
+</div>
 
             {/* SNAKE GAME TILE */}
             <div className="col-12 col-md-6">
