@@ -118,6 +118,9 @@ export default function App() {
           </div>
         </div>
       </section>
+      <footer className="text-center py-3 text-secondary small">
+          © {new Date().getFullYear()} Matt Downs. All rights reserved.
+      </footer>
     </>
   );
 }
