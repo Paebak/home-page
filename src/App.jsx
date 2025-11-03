@@ -98,8 +98,10 @@ export default function App() {
   {/* Top half: Experience */}
   <div id="experience" className="tile tile--cta flex-fill d-flex flex-column">
     <h5 className="mb-1">Experience 🧰</h5>
-    <div className="text-secondary small mb-2">
-      TDLM engineering, XSOAR runbooks, CMDB context.
+    <div className="text-secondary large mb-2">
+      Working in a fast paced Threat Detection and Log Management engineering position for a
+      Fortune 100 Company. Building pipelines, automations, and dashboards to help
+      security teams identify and mitigate risks. 🛡️
     </div>
     <div className="mt-auto">
       <Button href="#experience-full" size="sm">See roles</Button>
