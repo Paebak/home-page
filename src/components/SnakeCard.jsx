@@ -5,6 +5,7 @@ import { Card, Button, ButtonGroup, Badge } from "react-bootstrap";
 /**
  * <SnakeCard /> — drop this inside any React-Bootstrap layout.
  * Arrow keys / WASD to move. Space = pause. R = reset.
+ * On phones: swipe on the board or use the D-pad to steer.
  */
 export default function SnakeCard() {
   // Tunables
@@ -27,6 +28,10 @@ export default function SnakeCard() {
 
   const snakeRef = useRef([]);
   const foodRef = useRef({ x: 5, y: 5 });
+
+  // Touch swipe tracking
+  const touchStartRef = useRef({ x: 0, y: 0, active: false });
+  const SWIPE_THRESH = 24; // px movement needed to register a swipe
 
   const randomEmptyCell = useCallback(() => {
     const taken = new Set(snakeRef.current.map(p => `${p.x},${p.y}`));
@@ -96,7 +101,6 @@ export default function SnakeCard() {
     snake.forEach((p, idx) => {
       const r = idx === 0 ? 3 : 2;
       ctx.beginPath();
-      // roundRect is widely supported in modern browsers
       ctx.roundRect(p.x * TILE + 1, p.y * TILE + 1, TILE - 2, TILE - 2, r);
       ctx.fill();
     });
@@ -181,6 +185,64 @@ export default function SnakeCard() {
     return () => window.removeEventListener("keydown", onKey);
   }, [draw, resetGame]);
 
+  // Touch (swipe) controls on the canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const onTouchStart = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+      const t = e.touches[0];
+      touchStartRef.current = { x: t.clientX, y: t.clientY, active: true };
+      // prevent scroll/bounce
+      e.preventDefault();
+    };
+
+    const onTouchMove = (e) => {
+      // prevent page scroll while swiping on the board
+      if (touchStartRef.current.active) e.preventDefault();
+    };
+
+    const onTouchEnd = (e) => {
+      const start = touchStartRef.current;
+      if (!start.active) return;
+
+      // last touch point (or changedTouches[0])
+      const t = (e.changedTouches && e.changedTouches[0]) || null;
+      if (!t) { touchStartRef.current.active = false; return; }
+
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+
+      // Ignore micro-movements
+      if (Math.max(Math.abs(dx), Math.abs(dy)) >= SWIPE_THRESH) {
+        const cur = dirRef.current;
+        // Horizontal swipe
+        if (Math.abs(dx) > Math.abs(dy)) {
+          const next = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+          if (!(next.x === -cur.x && next.y === -cur.y)) pendingDirRef.current = next;
+        } else {
+          const next = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+          if (!(next.x === -cur.x && next.y === -cur.y)) pendingDirRef.current = next;
+        }
+      }
+
+      touchStartRef.current.active = false;
+      e.preventDefault();
+    };
+
+    // Use non-passive to allow preventDefault
+    canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+    canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    canvas.addEventListener("touchend", onTouchEnd, { passive: false });
+
+    return () => {
+      canvas.removeEventListener("touchstart", onTouchStart);
+      canvas.removeEventListener("touchmove", onTouchMove);
+      canvas.removeEventListener("touchend", onTouchEnd);
+    };
+  }, []);
+
   // Loop start/stop
   useEffect(() => {
     if (running) {
@@ -206,6 +268,14 @@ export default function SnakeCard() {
     stepMsRef.current = ms;
   };
 
+  // helper for D-pad taps
+  const nudgeDir = (next) => {
+    const cur = dirRef.current;
+    if (!(next.x === -cur.x && next.y === -cur.y)) {
+      pendingDirRef.current = next;
+    }
+  };
+
   return (
     <Card className="h-100 shadow-sm">
       <Card.Header className="d-flex justify-content-between align-items-center">
@@ -215,12 +285,18 @@ export default function SnakeCard() {
           <Badge bg="success" title="Best on this browser">High Score!: {high}</Badge>
         </div>
       </Card.Header>
+
       <Card.Body className="d-flex flex-column">
-        <div className="ratio ratio-1x1 border rounded" style={{ overflow: "hidden" }}>
+        {/* Board */}
+        <div
+          className="ratio ratio-1x1 border rounded"
+          style={{ overflow: "hidden", touchAction: "none" }} // critical for mobile swipes
+        >
           <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
         </div>
 
-        <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+        {/* Desktop controls */}
+        <div className="d-none d-sm-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
           <ButtonGroup>
             <Button variant={running ? "warning" : "primary"} onClick={() => setRunning(p => !p)}>
               {running ? "Pause (Space)" : "Start (Space)"}
@@ -237,7 +313,62 @@ export default function SnakeCard() {
           </ButtonGroup>
         </div>
 
-        <small className="text-muted mt-2">
+        {/* Mobile controls (visible on xs only) */}
+        <div className="d-flex d-sm-none flex-column gap-2 mt-3">
+          <div className="d-flex justify-content-center gap-2">
+            <Button size="sm" variant="primary" onClick={() => setRunning(p => !p)}>
+              {running ? "Pause" : "Start"}
+            </Button>
+            <Button size="sm" variant="outline-secondary" onClick={() => { resetGame(); draw(); }}>
+              Reset
+            </Button>
+            <Button size="sm" variant="outline-success" onClick={() => setSpeed("Fast", 80)}>
+              FastMode 🔥
+            </Button>
+          </div>
+
+          {/* D-pad */}
+          <div className="d-flex justify-content-center">
+            <div className="d-grid" style={{ gridTemplateColumns: "56px 56px 56px", gap: "8px" }} aria-label="Directional pad">
+              <div />
+              <Button
+                size="sm"
+                className="fw-bold"
+                onClick={() => nudgeDir({ x: 0, y: -1 })}
+                aria-label="Up"
+              >▲</Button>
+              <div />
+              <Button
+                size="sm"
+                className="fw-bold"
+                onClick={() => nudgeDir({ x: -1, y: 0 })}
+                aria-label="Left"
+              >◀</Button>
+              <div />
+              <Button
+                size="sm"
+                className="fw-bold"
+                onClick={() => nudgeDir({ x: 1, y: 0 })}
+                aria-label="Right"
+              >▶</Button>
+              <div />
+              <Button
+                size="sm"
+                className="fw-bold"
+                onClick={() => nudgeDir({ x: 0, y: 1 })}
+                aria-label="Down"
+              >▼</Button>
+              <div />
+            </div>
+          </div>
+
+          <small className="text-muted text-center">
+            Tip: swipe on the board to steer.
+          </small>
+        </div>
+
+        {/* Shared hint (desktop already has separate control strip) */}
+        <small className="text-muted mt-2 d-none d-sm-block">
           Controls: Arrow keys / WASD. Space to pause/resume. R to restart.
         </small>
       </Card.Body>
