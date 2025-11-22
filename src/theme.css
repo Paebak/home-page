@@ -29,7 +29,7 @@
   --bs-secondary-color-rgb: 75, 85, 101;
 }
 
-/* DARK MODE */
+/* DARK */
 :root[data-bs-theme="dark"] {
   --nf-gray-0: #0f1115;
   --nf-gray-1: #585a5e;
@@ -60,10 +60,14 @@
    ========================= */
 html, body, #root { height: 100%; }
 body { margin: 0; }
-.underline-thick { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.underline-thick {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
 
 /* =========================
-   Tile Dashboard
+   Full-viewport Tile Dashboard
    ========================= */
 .tiles-root {
   min-height: 100vh;
@@ -73,28 +77,63 @@ body { margin: 0; }
   align-items: center;
 }
 
+/* Keep the tile grid fixed at 2 columns max and centered */
+.tile-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(120px, auto);
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  justify-content: center;
+  grid-auto-flow: dense;
+}
+
+/* Responsive: single column for narrow screens */
+@media (max-width: 575.98px) {
+  .tile-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+}
+
+/* Base tile */
 .tile {
-  background: #000 !important;
-  border: 1px solid #000 !important;
+  background: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-card-border-color);
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  overflow: hidden;
   padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform .15s ease, box-shadow .15s ease;
+  position: relative; /* needed for ::before arrow positioning */
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    border-color .15s ease;
 }
+
 .tile:hover {
   transform: translateY(-2px);
   box-shadow: 0 14px 28px rgba(0,0,0,.28);
 }
 
 /* CTA arrow */
+.tile--cta::after {
+  content: none !important;
+  display: none !important;
+}
+
 .tile--cta::before {
   content: "";
   position: absolute;
-  top: 12px; right: 15px;
-  width: 34px; height: 34px;
+  top: 12px;
+  right: 15px;
+  width: 34px;
+  height: 34px;
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -106,22 +145,111 @@ body { margin: 0; }
 
 .tile--cta:hover {
   border-color: color-mix(in oklab, var(--nf-green) 60%, transparent);
-  box-shadow: 0 12px 28px rgba(0,0,0,.32), 0 0 0 2px color-mix(in oklab, var(--nf-green) 35%, transparent);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.32),
+    0 0 0 2px color-mix(in oklab, var(--nf-green) 35%, transparent);
 }
 
-.tile--hero { min-height: 360px; }
+/* Spans */
+.tile--hero {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+@media (max-width: 991.98px) {
+  .tile--hero {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+@media (max-width: 575.98px) {
+  .tile--hero {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
 
-/* GitHub Tile */
+.tile--tall { grid-row: span 2; }
+@media (max-width: 575.98px) {
+  .tile--tall { grid-row: span 1; }
+}
+
+.tile--right {
+  align-items: center;
+  justify-content: center;
+}
+
+.tile .btn {
+  padding: .35rem .75rem;
+}
+
+/* =========================
+   GitHub Tile — solid + watermark
+   ========================= */
 .tile--github {
   position: relative;
+  border: 1px solid var(--bs-card-border-color);
+  border-radius: 16px;
   color: #fff !important;
+  overflow: hidden;
   box-shadow: 0 8px 20px rgba(0,0,0,.35);
-}
-.tile--github:hover {
-  transform: translateY(-3px);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .15s ease;
 }
 
-/* Theme Toggle styling */
+.tile--github:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.35);
+}
+
+.tile--github::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff18' d='M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.82a7.6 7.6 0 012-.27 7.6 7.6 0 012 .27c1.53-1.03 2.2-.82 2.2-.82.44 1.09.16 1.9.08 2.1.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.45.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right -10% bottom -10%;
+  background-size:160px;
+  opacity:.22;
+  z-index:0;
+}
+
+.tile--github .tile-content,
+.tile--github .tile-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   Tile Overrides
+   ========================= */
+.tile {
+  background: #000 !important;
+  border-color: #000 !important;
+  color: #fff;
+}
+
+.tile a { color: inherit; }
+.tile .tile-icon { color: inherit; }
+
+.tile--cta:hover {
+  border-color: color-mix(in oklab, var(--nf-green) 60%, transparent);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.32),
+    0 0 0 2px color-mix(in oklab, var(--nf-green) 35%, transparent);
+}
+
+.tile--github.tile--cta:hover {
+  box-shadow:
+    0 14px 30px rgba(0,0,0,.35),
+    0 0 0 2px color-mix(in oklab, var(--nf-green) 35%, transparent);
+  border-color: color-mix(in oklab, var(--nf-green) 60%, transparent);
+}
+
+/* =========================
+   Minimalist Theme Toggle
+   ========================= */
 .theme-toggle {
   display: inline-grid;
   place-items: center;
@@ -129,29 +257,129 @@ body { margin: 0; }
   height: 52px;
   border: none;
   background: transparent;
+  color: inherit;
   cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
+
 .theme-toggle:hover {
   opacity: 0.85;
   transform: scale(1.05);
 }
 
-/* Responsive width locks */
+.theme-toggle svg {
+  width: 46px;
+  height: 46px;
+  display: block;
+}
+
+.theme-toggle span,
+.tile-title,
+.appearance-label {
+  display: none !important;
+}
+
+:root[data-bs-theme="dark"] .theme-toggle {
+  color: #a3d1fecc;
+}
+:root[data-bs-theme="light"] .theme-toggle {
+  color: #cee994;
+}
+
+.tile .theme-toggle {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   Responsive Width Control
+   ========================= */
+
+/* From tablets (≥768px) up — cap layout width */
+@media (min-width: 768px) {
+  .tiles-root .page-wrap {
+    max-width: 1120px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100%;
+  }
+}
+
+/* Prevent rows from expanding past the cap */
+.tiles-root .page-wrap > .row {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Tame hero text size */
+.hero-title {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.1;
+}
+
+.hero-blurb {
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+}
+
+@media (max-width: 991.98px) {
+  .tile--hero { grid-row: span 2; }
+}
+
+@media (min-width: 1440px) {
+  .tiles-root { padding: 40px; }
+}
+
+/* ===== Lock the layout from tablet (>=768px) and up ===== */
+
+/* 1) Fix the overall canvas width and center it */
 @media (min-width: 768px) {
   .tiles-root .page-wrap {
     max-width: 1120px !important;
     margin-inline: auto !important;
     width: 100%;
   }
-
-  .tile--hero { min-height: 360px; }
-  .tile--right { min-height: 160px; }
-  .tile { height: 100%; }
 }
 
+/* 2) Normalize gaps and prevent Bootstrap rows/gutters from re-expanding */
+.tiles-root .page-wrap > .row {
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  row-gap: 1.25rem; /* keep vertical rhythm consistent */
+}
+
+/* 3) Lock tile heights so the hero/right stack always reads the same */
+@media (min-width: 768px) {
+  .tile--hero { min-height: 360px; }          /* hero stays the same height */
+  .tile--right { min-height: 160px; }         /* small stacked tiles */
+  .tile { height: 100%; }                     /* equalize tile cards in rows */
+}
+
+/* 4) Tame hero typography so line breaks don't change with width */
 .hero-title {
   font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.1;
 }
 .hero-blurb {
   font-size: clamp(1rem, 1.4vw, 1.125rem);
+}
+
+/* Smooth transition between light/dark modes */
+html,
+body,
+.tile,
+.card,
+.navbar,
+.btn,
+.theme-toggle,
+.hero-title,
+.hero-blurb {
+  transition:
+    background-color 1s ease,
+    color 1s ease,
+    border-color 1s ease,
+    box-shadow 1s ease;
 }
