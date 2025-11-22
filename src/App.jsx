@@ -25,7 +25,16 @@ export default function App() {
                   <div className="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
                     <Button href="#about" size="sm">About</Button>
                     <Button variant="outline-primary" href="https://github.com/Paebak" size="sm">GitHub</Button>
-                    <Button variant="outline-secondary" href="/matt-downs-resume.pdf" size="sm">Resume</Button>
+<Button
+  variant="outline-secondary"
+  href="/Matthew_Downs_Resume_Final_TDLM_Skills.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  size="sm"
+>
+  Resume
+</Button>
+
                   </div>
                 </div>
 
