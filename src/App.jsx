@@ -39,20 +39,30 @@ export default function App() {
               </div>
             </div>
 
-            {/* RIGHT: two stacked tiles */}
-            <div className="col-12 col-md-4 d-flex flex-column gap-3">
-              {/* Top: theme toggle (smaller box) */}
-              <div className="tile tile--right tile--cta d-flex align-items-center justify-content-center" style={{ minHeight: "8rem" }}>
-                <ThemeToggle />
-              </div>
+            {/* RIGHT: THE FIX — Side-by-side on mobile, stacked on md+ */}
+            <div className="col-12 col-md-4">
+              <div className="d-flex flex-row flex-md-column gap-3">
 
-              {/* Bottom: neofound */}
-              <div className="tile tile--right tile--cta d-flex align-items-center justify-content-center" style={{ minHeight: "8rem" }}>
-                <div className="fw-semibold">neofound</div>
+                {/* Theme toggle tile */}
+                <div
+                  className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill"
+                  style={{ minHeight: "8rem" }}
+                >
+                  <ThemeToggle />
+                </div>
+
+                {/* Neofound tile */}
+                <div
+                  className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill"
+                  style={{ minHeight: "8rem" }}
+                >
+                  <div className="fw-semibold">neofound</div>
+                </div>
+
               </div>
             </div>
 
-            {/* BELOW: the rest of your tiles in a 2x2 grid */}
+            {/* BELOW: 2-column grid */}
             <div className="col-12 col-md-6">
               <div id="about" className="tile tile--cta h-100">
                 <h5 className="mb-1">About 👋</h5>
@@ -94,37 +104,37 @@ export default function App() {
               </a>
             </div>
 
-           <div className="col-12 col-md-6 d-flex flex-column gap-3">
-  {/* Top half: Experience */}
-  <div id="experience" className="tile tile--cta flex-fill d-flex flex-column">
-    <h5 className="mb-1">Experience 🧰</h5>
-    <div className="text-secondary large mb-2">
-      Working in a fast paced Threat Detection and Log Management engineering position for a
-      Fortune 100 Company. Building pipelines, automations, and dashboards to help
-      security teams identify and mitigate risks. 🛡️
-    </div>
-    <div className="mt-auto">
-      <Button href="#experience-full" size="sm">See roles</Button>
-    </div>
-  </div>
+            {/* EXPERIENCE + PHOTO PROJECTS */}
+            <div className="col-12 col-md-6 d-flex flex-column gap-3">
 
-  {/* Bottom half: Photography Projects */}
-  <div id="photo-projects" className="tile tile--cta flex-fill d-flex flex-column">
-    <h5 className="mb-1">Photography Projects 📷</h5>
-    <div className="text-secondary small mb-2">
-      Darkroom workflows, film tests, and dev charts.
-    </div>
-    <div className="d-flex flex-wrap gap-2 small">
-      <Button href="#photo-app" size="sm" variant="outline-primary">R2 App</Button>
-      <Button href="#dev-notes" size="sm" variant="outline-secondary">Dev Notes</Button>
-      <Button href="#gallery" size="sm">Gallery</Button>
-    </div>
-  </div>
-</div>
+              <div id="experience" className="tile tile--cta flex-fill d-flex flex-column">
+                <h5 className="mb-1">Experience 🧰</h5>
+                <div className="text-secondary large mb-2">
+                  Working in a fast paced Threat Detection and Log Management engineering position for a
+                  Fortune 100 Company. Building pipelines, automations, and dashboards to help
+                  security teams identify and mitigate risks. 🛡️
+                </div>
+                <div className="mt-auto">
+                  <Button href="#experience-full" size="sm">See roles</Button>
+                </div>
+              </div>
 
-            {/* SNAKE GAME TILE */}
+              <div id="photo-projects" className="tile tile--cta flex-fill d-flex flex-column">
+                <h5 className="mb-1">Photography Projects 📷</h5>
+                <div className="text-secondary small mb-2">
+                  Darkroom workflows, film tests, and dev charts.
+                </div>
+                <div className="d-flex flex-wrap gap-2 small">
+                  <Button href="#photo-app" size="sm" variant="outline-primary">R2 App</Button>
+                  <Button href="#dev-notes" size="sm" variant="outline-secondary">Dev Notes</Button>
+                  <Button href="#gallery" size="sm">Gallery</Button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* SNAKE GAME */}
             <div className="col-12 col-md-6">
-              {/* SnakeCard renders its own Bootstrap Card; we wrap it in your tile container for consistent spacing */}
               <div className="tile tile--cta h-100 p-0">
                 <SnakeCard />
               </div>
@@ -133,6 +143,7 @@ export default function App() {
           </div>
         </div>
       </section>
+
       <footer className="text-center py-3 text-secondary small">
         © {new Date().getFullYear()} Matt Downs. All rights reserved.
       </footer>
