@@ -10,7 +10,6 @@ export default function App() {
       <section className="tiles-root">
         <div className="container-fluid page-wrap px-3 px-sm-4 px-lg-5">
           <div className="row g-3 g-lg-4 align-items-stretch">
-
             {/* LEFT: hero spans 2/3 on md+ */}
             <div className="col-12 col-md-8">
               <div className="tile tile--hero tile--cta h-100 d-flex flex-column flex-md-row align-items-center justify-content-between text-md-start text-center">
@@ -19,56 +18,47 @@ export default function App() {
                     Hi! I'm <span style={{ color: "#22c55e" }}>Matt</span> - I'm a Cybersecurity Engineer!
                   </h1>
                   <p className="hero-blurb mb-3">
-                    I build <strong>people-first</strong> ingestion pipelines & automations in TDLM—
-                    making internal & external risks visible early and actionable for stakeholders.
+                    I build <strong>people-first</strong> ingestion pipelines & automations in Threat Detection
+                    and Log Management, making internal & external risks visible early producing actionable
+                    insights for key stakeholders.
                   </p>
                   <div className="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
-                    <Button href="#about" size="sm">About</Button>
-                    <Button variant="outline-primary" href="https://github.com/Paebak" size="sm">GitHub</Button>
-<Button
-  variant="outline-secondary"
-  href="/Matthew_Downs_Resume_Final_TDLM_Skills.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  size="sm"
->
-  Resume
-</Button>
-
+                    <Button href="#about" size="sm">
+                      About
+                    </Button>
+                    <Button variant="outline-primary" href="https://github.com/Paebak" size="sm">
+                      GitHub
+                    </Button>
+                    <Button
+                      variant="outline-secondary"
+                      href="/Matthew_Downs_Resume_Final_TDLM_Skills.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="sm"
+                    >
+                      Resume
+                    </Button>
                   </div>
                 </div>
 
                 <div className="mt-4 mt-md-0 text-center">
-                  <img
-                    src={memoji}
-                    alt="Matt Memoji"
-                    className="hero-img"
-                  />
+                  <img src={memoji} alt="Matt Memoji" className="hero-img" />
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: THE FIX — Side-by-side on mobile, stacked on md+ */}
-            <div className="col-12 col-md-4">
-              <div className="d-flex flex-row flex-md-column gap-3">
-
+            {/* RIGHT: matches hero height on md+; side-by-side on mobile */}
+            <div className="col-12 col-md-4 d-flex">
+              <div className="d-flex flex-row flex-md-column gap-3 w-100 h-100">
                 {/* Theme toggle tile */}
-                <div
-                  className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill"
-                  style={{ minHeight: "8rem" }}
-                >
+                <div className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill">
                   <ThemeToggle />
                 </div>
 
                 {/* Neofound tile */}
-                <div
-                  className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill"
-                  style={{ minHeight: "8rem" }}
-                >
+                <div className="tile tile--right tile--cta d-flex align-items-center justify-content-center flex-fill">
                   <div className="fw-semibold">neofound</div>
                 </div>
-              
-
               </div>
             </div>
 
@@ -79,7 +69,9 @@ export default function App() {
                 <div className="text-secondary small mb-2">
                   Who I am and how I turn telemetry into proactive defense.
                 </div>
-                <Button href="#about-full" size="sm">About me</Button>
+                <Button href="#about-full" size="sm">
+                  About me
+                </Button>
               </div>
             </div>
 
@@ -116,16 +108,17 @@ export default function App() {
 
             {/* EXPERIENCE + PHOTO PROJECTS */}
             <div className="col-12 col-md-6 d-flex flex-column gap-3">
-
               <div id="experience" className="tile tile--cta flex-fill d-flex flex-column">
                 <h5 className="mb-1">Experience 🧰</h5>
                 <div className="text-secondary large mb-2">
                   Working in a fast paced Threat Detection and Log Management engineering position for a
-                  Fortune 100 Company. Building pipelines, automations, and dashboards to help
-                  security teams identify and mitigate risks. 🛡️
+                  Fortune 100 Company. Building pipelines, automations, and dashboards to help security teams
+                  identify and mitigate risks. 🛡️
                 </div>
                 <div className="mt-auto">
-                  <Button href="#experience-full" size="sm">See roles</Button>
+                  <Button href="#experience-full" size="sm">
+                    See roles
+                  </Button>
                 </div>
               </div>
 
@@ -135,12 +128,17 @@ export default function App() {
                   Darkroom workflows, film tests, and dev charts.
                 </div>
                 <div className="d-flex flex-wrap gap-2 small">
-                  <Button href="#photo-app" size="sm" variant="outline-primary">R2 App</Button>
-                  <Button href="#dev-notes" size="sm" variant="outline-secondary">Dev Notes</Button>
-                  <Button href="#gallery" size="sm">Gallery</Button>
+                  <Button href="#photo-app" size="sm" variant="outline-primary">
+                    R2 App
+                  </Button>
+                  <Button href="#dev-notes" size="sm" variant="outline-secondary">
+                    Dev Notes
+                  </Button>
+                  <Button href="#gallery" size="sm">
+                    Gallery
+                  </Button>
                 </div>
               </div>
-
             </div>
 
             {/* SNAKE GAME */}
@@ -149,7 +147,6 @@ export default function App() {
                 <SnakeCard />
               </div>
             </div>
-
           </div>
         </div>
       </section>
