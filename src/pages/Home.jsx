@@ -17,7 +17,6 @@ export default function Home() {
           {/* HERO */}
           <div className="tile bento-hero">
             <div className="hero-content">
-              <img src={memoji} alt="Matt Downs" className="hero-img" />
               <p className="hero-eyebrow mb-0">Hey there! My name's</p>
               <h1 className="hero-name mb-2">Matt 👾</h1>
               <p className="hero-blurb mb-3">
@@ -30,6 +29,7 @@ export default function Home() {
                 exploring the Pacific Northwest.
               </p>
             </div>
+            <img src={memoji} alt="Matt Downs" className="hero-img" />
           </div>
 
           {/* SOCIAL */}
@@ -120,7 +120,7 @@ export default function Home() {
           </a>
 
           {/* NOW PLAYING */}
-          <div className="tile bento-sm p-0 overflow-hidden">
+          <div className="tile bento-sm">
             <NowPlaying />
           </div>
 
