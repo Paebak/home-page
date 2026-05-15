@@ -6,36 +6,36 @@ const STACK = {
   Hardware: {
     emoji: "🔧",
     items: [
-      { name: "Lenovo Mini PC", note: "Primary compute node" },
-      { name: "Raspberry Pi 5", note: "Lightweight services & DNS" },
-      { name: "Cisco Switch", note: "Managed network switching" },
-      { name: "Synology NAS", note: "Network-attached storage" },
-      { name: "Mac Mini", note: "Coming soon" },
+      { name: "Lenovo Mini PC", note: "Primary compute node", href: "https://www.lenovo.com/us/en/d/mini-pcs/" },
+      { name: "Raspberry Pi 5", note: "Lightweight services & DNS", href: "https://www.raspberrypi.com/products/raspberry-pi-5/" },
+      { name: "Cisco Switch", note: "Managed network switching", href: "https://www.cisco.com/c/en/us/products/switches/index.html" },
+      { name: "Synology NAS", note: "Network-attached storage", href: "https://www.synology.com/" },
+      { name: "Mac Mini", note: "Coming soon", href: "https://www.apple.com/mac-mini/" },
     ],
   },
   Services: {
     emoji: "⚙️",
     items: [
-      { name: "Proxmox", note: "Hypervisor / VM host" },
-      { name: "TrueNAS", note: "Storage OS" },
-      { name: "Docker", note: "All services containerised" },
-      { name: "Jellyfin", note: "Media server" },
-      { name: "*ARR Stack", note: "Media automation" },
-      { name: "Pi-hole", note: "Network-wide DNS & ad blocking" },
-      { name: "Vaultwarden", note: "Self-hosted password manager" },
-      { name: "BookStack", note: "Internal wiki & docs" },
-      { name: "Grafana", note: "Dashboards & visualisation" },
-      { name: "Prometheus", note: "Server health metrics" },
+      { name: "Proxmox", note: "Hypervisor / VM host", href: "https://www.proxmox.com/" },
+      { name: "TrueNAS", note: "Storage OS", href: "https://www.truenas.com/" },
+      { name: "Docker", note: "All services containerised", href: "https://www.docker.com/" },
+      { name: "Jellyfin", note: "Media server", href: "https://jellyfin.org/" },
+      { name: "*ARR Stack", note: "Media automation", href: "https://wiki.servarr.com/" },
+      { name: "Pi-hole", note: "Network-wide DNS & ad blocking", href: "https://pi-hole.net/" },
+      { name: "Vaultwarden", note: "Self-hosted password manager", href: "https://github.com/dani-garcia/vaultwarden" },
+      { name: "BookStack", note: "Internal wiki & docs", href: "https://www.bookstackapp.com/" },
+      { name: "Grafana", note: "Dashboards & visualisation", href: "https://grafana.com/" },
+      { name: "Prometheus", note: "Server health metrics", href: "https://prometheus.io/" },
     ],
   },
   "Security & OS": {
     emoji: "🛡️",
     items: [
-      { name: "Security Onion", note: "Network security monitoring" },
-      { name: "Windows Server", note: "AD & centralised PC management" },
-      { name: "Ubuntu", note: "" },
-      { name: "Debian", note: "" },
-      { name: "Kali Linux", note: "Security tooling" },
+      { name: "Security Onion", note: "Network security monitoring", href: "https://securityonionsolutions.com/" },
+      { name: "Windows Server", note: "AD & centralised PC management", href: "https://www.microsoft.com/en-us/windows-server" },
+      { name: "Ubuntu", note: "", href: "https://ubuntu.com/" },
+      { name: "Debian", note: "", href: "https://www.debian.org/" },
+      { name: "Kali Linux", note: "Security tooling", href: "https://www.kali.org/" },
     ],
   },
 };
@@ -55,12 +55,23 @@ export default function Homelab() {
         <div className="row g-3">
           {Object.entries(STACK).map(([section, { emoji, items }]) => (
             <div key={section} className="col-12 col-md-4">
-              <div className="tile tile--cta h-100 d-flex flex-column gap-3">
+              <div className="tile tile--cta h-100 d-flex flex-column gap-3 justify-content-start">
                 <h5 className="mb-0">{emoji} {section}</h5>
                 <div className="d-flex flex-column gap-2">
-                  {items.map(({ name, note }) => (
+                  {items.map(({ name, note, href }) => (
                     <div key={name} className="homelab-item">
-                      <span className="homelab-item__name">{name}</span>
+                      {href ? (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="homelab-item__name homelab-item__link"
+                        >
+                          {name}
+                        </a>
+                      ) : (
+                        <span className="homelab-item__name">{name}</span>
+                      )}
                       {note && <span className="homelab-item__note">{note}</span>}
                     </div>
                   ))}

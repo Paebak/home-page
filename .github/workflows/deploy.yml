@@ -33,7 +33,9 @@ jobs:
             fi
 
       - name: Build
-        env: { CI: false }
+        env:
+          CI: false
+          VITE_LASTFM_API_KEY: ${{ secrets.VITE_LASTFM_API_KEY }}
         run: npm run build
 
       - name: SPA 404 fallback

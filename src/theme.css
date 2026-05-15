@@ -686,6 +686,17 @@ body { margin: 0; }
   color: var(--bs-secondary-color);
 }
 
+.homelab-item__link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.homelab-item__link:hover {
+  color: var(--nf-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Now Playing */
 .now-playing {
   display: flex;
