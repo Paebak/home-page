@@ -43,6 +43,13 @@ export default function NowPlaying() {
       rel="noopener noreferrer"
       className="now-playing text-decoration-none"
     >
+      {/* Full-bleed album art */}
+      {track?.image && (
+        <img src={track.image} alt={track?.album} className="now-playing__bg" />
+      )}
+      <div className="now-playing__overlay" />
+
+      {/* Top label */}
       <div className="now-playing__header">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
@@ -50,15 +57,11 @@ export default function NowPlaying() {
         <span>{loading ? "Loading…" : track?.isPlaying ? "Now Playing" : "Last Played"}</span>
       </div>
 
+      {/* Bottom track info */}
       {track && !loading && (
-        <div className="now-playing__body">
-          {track.image && (
-            <img src={track.image} alt={track.album} className="now-playing__art" />
-          )}
-          <div className="now-playing__info">
-            <span className="now-playing__track">{track.name}</span>
-            <span className="now-playing__artist">{track.artist}</span>
-          </div>
+        <div className="now-playing__footer">
+          <span className="now-playing__track">{track.name}</span>
+          <span className="now-playing__artist">{track.artist}</span>
         </div>
       )}
 
