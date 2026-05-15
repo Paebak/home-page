@@ -101,7 +101,7 @@ body { margin: 0; }
   .bento-hero { grid-column: span 2; grid-row: span 1; flex-direction: column !important; align-items: flex-start; }
   .bento-hero .hero-img { display: none; }
   .bento-md   { grid-column: span 2; }
-  .bento-sm   { grid-column: span 1; height: 110px; }
+  .bento-sm   { grid-column: span 1; min-height: 110px; }
 
   /* Resume: pull label into flow so it stacks with icon, then both center */
   .util-label { position: static; font-size: 0.8rem; margin-bottom: 2px; }
