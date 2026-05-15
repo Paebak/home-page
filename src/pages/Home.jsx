@@ -120,7 +120,7 @@ export default function Home() {
           </a>
 
           {/* NOW PLAYING */}
-          <div className="tile bento-sm">
+          <div className="tile bento-sm img-tile p-0">
             <NowPlaying />
           </div>
 
