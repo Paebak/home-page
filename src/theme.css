@@ -103,8 +103,9 @@ body { margin: 0; }
   .bento-md   { grid-column: span 2; }
   .bento-sm   { grid-column: span 1; height: 110px; }
 
-  /* Resume: scale icon down so label doesn't collide */
-  .util-icon { width: 40px !important; height: 40px !important; }
+  /* Resume: pull label into flow so it stacks with icon, then both center */
+  .util-label { position: static; font-size: 0.8rem; margin-bottom: 2px; }
+  .util-icon  { width: 40px !important; height: 40px !important; }
 }
 
 @media (max-width: 520px) {
@@ -705,6 +706,7 @@ body { margin: 0; }
 .now-playing {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
   width: 100%;
   height: 100%;
@@ -727,7 +729,6 @@ body { margin: 0; }
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
 }
 
 .now-playing__art {
