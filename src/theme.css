@@ -97,10 +97,14 @@ body { margin: 0; }
     grid-template-rows: auto;
     grid-auto-rows: auto;
   }
-  .bento-hero { grid-column: span 2; grid-row: span 1; flex-direction: column; align-items: flex-start; }
-  .bento-hero .hero-img { height: 180px; margin-right: 0; margin-bottom: -18px; align-self: center; }
+  /* !important needed to beat the desktop flex-direction: row !important on .bento-hero */
+  .bento-hero { grid-column: span 2; grid-row: span 1; flex-direction: column !important; align-items: flex-start; }
+  .bento-hero .hero-img { display: none; }
   .bento-md   { grid-column: span 2; }
   .bento-sm   { grid-column: span 1; height: 110px; }
+
+  /* Resume: scale icon down so label doesn't collide */
+  .util-icon { width: 40px !important; height: 40px !important; }
 }
 
 @media (max-width: 520px) {
