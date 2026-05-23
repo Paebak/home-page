@@ -11,7 +11,7 @@ export default function NowPlaying() {
   useEffect(() => {
     async function fetchTrack() {
       try {
-        const res = await fetch(ENDPOINT);
+        const res = await fetch(ENDPOINT, { cache: "no-store" });
         const data = await res.json();
         const latest = data.recenttracks?.track?.[0];
         if (latest) {

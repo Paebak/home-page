@@ -83,7 +83,7 @@ export default function Work() {
         {/* Timeline */}
         <div className="work-timeline">
           {ROLES.map((role, i) => (
-            <div key={i} className="tile tile--cta mb-3 d-flex flex-column gap-3">
+            <div key={i} className="tile tile--cta mb-3 d-flex flex-column gap-3 justify-content-start">
               <div className="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-1">
                 <div>
                   <div className="d-flex align-items-center gap-2 flex-wrap mb-1">
