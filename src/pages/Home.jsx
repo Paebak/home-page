@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ThemeToggle from "../components/ThemeToggle.jsx";
-import SnakeCard from "../components/SnakeCard.jsx";
+import GameCard from "../components/GameCard.jsx";
 import PhotoCard from "../components/PhotoCard.jsx";
 import NowPlaying from "../components/NowPlaying.jsx";
 import Footer from "../components/layout/Footer.jsx";
@@ -144,9 +144,9 @@ export default function Home() {
             <PhotoCard />
           </div>
 
-          {/* SNAKE */}
+          {/* GAMES */}
           <div className="tile bento-md p-0 overflow-hidden">
-            <SnakeCard />
+            <GameCard />
           </div>
 
         </div>

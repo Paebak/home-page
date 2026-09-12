@@ -1,13 +1,14 @@
 // src/components/SnakeCard.jsx
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Card, Button, ButtonGroup, Badge } from "react-bootstrap";
+import GameSwitcher from "./GameSwitcher.jsx";
 
 /**
  * <SnakeCard /> — drop this inside any React-Bootstrap layout.
  * Arrow keys / WASD to move. Space = pause. R = reset.
  * On phones: swipe on the board or use the D-pad to steer.
  */
-export default function SnakeCard() {
+export default function SnakeCard({ switcher }) {
   // Tunables
   const COLS = 20;
   const ROWS = 20;
@@ -283,6 +284,7 @@ export default function SnakeCard() {
         <div className="d-flex align-items-center gap-2">
           <Badge bg="info" title="Current score">Score: {score}</Badge>
           <Badge bg="success" title="Best on this browser">High Score!: {high}</Badge>
+          {switcher && <GameSwitcher {...switcher} />}
         </div>
       </Card.Header>
 
