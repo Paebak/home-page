@@ -32,6 +32,7 @@ export default function MinesweeperCard({ switcher }) {
   const [seconds, setSeconds] = useState(0);
   const [flagMode, setFlagMode] = useState(false);
   const [best, setBest] = useState(() => Number(localStorage.getItem("minesweeper.best") || 0));
+  const [pressing, setPressing] = useState(false);
 
   const minedRef = useRef(false);
   const timerRef = useRef(null);
@@ -41,6 +42,15 @@ export default function MinesweeperCard({ switcher }) {
     timerRef.current = setInterval(() => setSeconds((s) => Math.min(s + 1, 999)), 1000);
     return () => clearInterval(timerRef.current);
   }, [status]);
+
+  // Classic Minesweeper: the face goes "surprised" while a reveal press
+  // (single left-click or the two-button chord) is held down, wherever
+  // the release ends up happening.
+  useEffect(() => {
+    const onUp = () => setPressing(false);
+    window.addEventListener("mouseup", onUp);
+    return () => window.removeEventListener("mouseup", onUp);
+  }, []);
 
   const resetGame = useCallback(() => {
     clearInterval(timerRef.current);
@@ -235,6 +245,8 @@ export default function MinesweeperCard({ switcher }) {
 
   const onCellMouseDown = (e, r, c) => {
     // e.buttons is a bitmask of currently-held buttons (1 = left, 2 = right).
+    // Any left involvement (alone or chorded) triggers the "surprised" face.
+    if (e.buttons & 1) setPressing(true);
     // 3 means both are down at once — the classic chord gesture.
     if (e.buttons === 3) {
       e.preventDefault();
@@ -260,21 +272,28 @@ export default function MinesweeperCard({ switcher }) {
     8: "#6b7280",
   };
 
-  const faceEmoji = status === "won" ? "😎" : status === "lost" ? "😵" : "🙂";
+  const faceEmoji =
+    status === "won" ? "😎" : status === "lost" ? "😵" : pressing ? "😮" : "🙂";
 
   return (
     <Card className="h-100 shadow-sm">
-      <Card.Header className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <span>
-          <strong>Play Minesweeper! 💣</strong>{" "}
-          <Badge bg="secondary" className="ms-2">Intermediate {COLS}×{ROWS}</Badge>
-        </span>
-        <div className="d-flex align-items-center gap-2">
-          <Badge bg="warning" text="dark" title="Mines remaining">🚩 {minesLeft}</Badge>
-          <Badge bg="info" title="Time elapsed">⏱ {seconds}s</Badge>
-          {best > 0 && <Badge bg="success" title="Best time on this browser">Best: {best}s</Badge>}
-          {switcher && <GameSwitcher {...switcher} />}
+      <Card.Header className="game-card-header">
+        <div className="game-card-header__info">
+          <span>
+            <strong>Play Minesweeper! 💣</strong>{" "}
+            <Badge bg="secondary" className="ms-2">Intermediate {COLS}×{ROWS}</Badge>
+          </span>
+          <div className="d-flex align-items-center gap-2">
+            <Badge bg="warning" text="dark" title="Mines remaining">🚩 {minesLeft}</Badge>
+            <Badge bg="info" title="Time elapsed">⏱ {seconds}s</Badge>
+            {best > 0 && <Badge bg="success" title="Best time on this browser">Best: {best}s</Badge>}
+          </div>
         </div>
+        {switcher && (
+          <div className="game-card-header__switcher">
+            <GameSwitcher {...switcher} />
+          </div>
+        )}
       </Card.Header>
 
       <Card.Body className="d-flex flex-column align-items-center">

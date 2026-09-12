@@ -922,7 +922,7 @@ body { margin: 0; }
 }
 
 .photo-card__btn:hover {
-  background: rgba(0,0,0,0.65);
+  background: color-mix(in oklab, var(--nf-green) 55%, rgba(0,0,0,0.65));
 }
 
 .photo-card__dots {
@@ -937,15 +937,42 @@ body { margin: 0; }
   height: 6px;
   border-radius: 999px;
   border: none;
-  background: rgba(255,255,255,0.4);
+  background: rgba(127,127,127,0.5);
   padding: 0;
   cursor: pointer;
   transition: background 0.2s ease, width 0.2s ease;
 }
 
 .photo-card__dot--active {
-  background: #fff;
+  background: var(--nf-green);
   width: 18px;
+}
+
+/* =========================
+   Game card header (SnakeCard / MinesweeperCard)
+   A fixed two-column grid keeps the switcher pinned to the same spot
+   regardless of how much badge text sits in the info column, so it
+   doesn't shift position when flipping between games.
+   ========================= */
+.game-card-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.game-card-header__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.game-card-header__switcher {
+  display: flex;
+  align-items: center;
 }
 
 /* =========================

@@ -286,13 +286,19 @@ export default function SnakeCard({ switcher, active = true }) {
 
   return (
     <Card className="h-100 shadow-sm">
-      <Card.Header className="d-flex justify-content-between align-items-center">
-        <span><strong>Play Snake! 🐍</strong> <Badge bg="secondary" className="ms-2">{COLS}×{ROWS}</Badge></span>
-        <div className="d-flex align-items-center gap-2">
-          <Badge bg="info" title="Current score">Score: {score}</Badge>
-          <Badge bg="success" title="Best on this browser">High Score!: {high}</Badge>
-          {switcher && <GameSwitcher {...switcher} />}
+      <Card.Header className="game-card-header">
+        <div className="game-card-header__info">
+          <span><strong>Play Snake! 🐍</strong> <Badge bg="secondary" className="ms-2">{COLS}×{ROWS}</Badge></span>
+          <div className="d-flex align-items-center gap-2">
+            <Badge bg="info" title="Current score">Score: {score}</Badge>
+            <Badge bg="success" title="Best on this browser">High Score!: {high}</Badge>
+          </div>
         </div>
+        {switcher && (
+          <div className="game-card-header__switcher">
+            <GameSwitcher {...switcher} />
+          </div>
+        )}
       </Card.Header>
 
       <Card.Body className="d-flex flex-column">
