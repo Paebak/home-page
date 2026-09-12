@@ -8,7 +8,7 @@ import GameSwitcher from "./GameSwitcher.jsx";
  * Arrow keys / WASD to move. Space = pause. R = reset.
  * On phones: swipe on the board or use the D-pad to steer.
  */
-export default function SnakeCard({ switcher }) {
+export default function SnakeCard({ switcher, active = true }) {
   // Tunables
   const COLS = 20;
   const ROWS = 20;
@@ -263,6 +263,13 @@ export default function SnakeCard({ switcher }) {
     draw();
     return () => ro.disconnect();
   }, [draw, resetGame]);
+
+  // The card can stay mounted while hidden (e.g. behind a carousel tab), where
+  // the canvas has a 0px box and can't size itself correctly. Redraw once it's
+  // visible again so the board isn't stuck blank/stale.
+  useEffect(() => {
+    if (active) draw();
+  }, [active, draw]);
 
   const setSpeed = (label, ms) => {
     setSpeedLabel(label);
